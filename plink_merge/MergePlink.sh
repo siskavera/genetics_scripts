@@ -22,7 +22,7 @@ plink --file $2 --merge $3.ped $3.map --make-bed --out ${INTER} >"${1}_mergescri
 if [ -a ${INTER}.missnp ]
 then
 	echo "Dealing with triallelic sites in ${2} and ${3}"	
-	cat ${INTER}.missnp > ${1}_triallelic.txt
+	cat ${INTER}.missnp >> ${1}_triallelic.txt
 	plink --file $2 --exclude ${INTER}.missnp --recode --out ${2}_nomis >"${1}_mergescript.log"
 	plink --file $3 --exclude ${INTER}.missnp --recode --out ${3}_nomis >"${1}_mergescript.log"
 	plink --file ${2}_nomis --merge ${3}_nomis.ped ${3}_nomis.map --make-bed --out ${INTER} >"${1}_mergescript.log"
