@@ -9,4 +9,4 @@ This project includes scripts I'm using to manipulate genetic data. They are not
 Just me for now.
 
 ## Setup & Requirements
-The scripts were written on Linux, using just standard tools (bash, awk).
+The scripts were written on Linux, using just standard tools (bash, awk). Plink merging scripts require Plink installed.
