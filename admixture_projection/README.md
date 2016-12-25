@@ -3,7 +3,15 @@
 Projects samples on pre-defined ADMIXTURE components by numerically optimising the likelihood function from (1), using the logic of (2) and (3).
 
 ### Usage:
-project_admixture.py <genotypes.ped> <ancestral_components.P> <output_prefix>
+project_admixture.py \<genotypes.ped\> \<ancestral_components.P\> \<output_prefix\>
+
+### Inputs:
+* \<genotypes.ped\>: 12-encoded PED file. Projection will be calculated for all samples in the file. Reference bases and SNP locations need to be exactly the same as in the file used in ADMIXTURE!
+* \<ancestral components.P\>: Output from ADMIXTURE, containing allele frequencies for the ancestral components.
+* \<output_prefix\>: Prefix for output.
+
+### Output:
+* \<prefix\>_props.txt: Contains inferred ancestry proportions for all samples (rows) and components (columns).
 
 ### Requirements:
 * python 2 (I used 2.7.6)
