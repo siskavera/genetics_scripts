@@ -76,6 +76,7 @@ for i_rep in range(n_replicates):
 	all_props[:,:,i_rep] = props_minim
 	np.savetxt(out_filename, props_minim, fmt='%.6f')
 
+# Calculating summary statistics
 print >> sys.stderr, "calculating summary statistics"
 summary_filename = "%s_summary.txt" % (prefix)
 with open(summary_filename, "w") as outfile:
