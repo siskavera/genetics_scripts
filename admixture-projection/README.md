@@ -27,6 +27,7 @@ bootstrap_snpsonly.py \<genotypes.ped\> \<ancestral_components.P\> \<output_pref
 
 ### Output:
 * \<prefix\>_props_i.txt: Contains inferred ancestry proportions for all samples (rows) and components (columns) from replicate i.
+* \<prefix\>_summary.txt: Contains summary statistics (mean, standard deviation, 95% confidence interval bottom and top) per sample and component. Tab-separated, with header.
 
 ### Requirements:
 * python 2 (I used 2.7.6)
