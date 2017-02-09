@@ -9,10 +9,15 @@ def fun(x, f, g):
 	x = x/np.sum(x)
 	return -(g.dot(np.log(f.dot(x)))+(2-g).dot(np.log((1-f).dot(x))))
 
-def estimate_proportions(geno_data, anc_data):
+def estimate_proportions(geno_data, anc_data, use_random_indices = False):
 	# Get contants
 	n_geno = geno_data.shape[1]
 	n_anc = anc_data.shape[1]
+
+	# Random sampling
+	if use_random_indices:
+		geno_data = geno_data[random_indices,:]
+		anc_data = anc_data[random_indices,:]
 	
 	# Setting up for optimisation
 	props_minim = np.empty([n_geno, n_anc])

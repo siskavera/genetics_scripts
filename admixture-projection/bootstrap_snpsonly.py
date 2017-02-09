@@ -16,6 +16,8 @@ def estimate_proportions(geno_data, anc_data, use_random_indices = False):
 
 	# Random sampling
 	if use_random_indices:
+		n_snps = geno_data.shape[0]
+		random_indices = np.random.randint(n_snps, size=n_snps)
 		geno_data = geno_data[random_indices,:]
 		anc_data = anc_data[random_indices,:]
 	
@@ -65,11 +67,24 @@ n_anc = anc_data.shape[1]
 print >> sys.stderr, "on %d ancestral components" % n_anc
 
 # Projecting all samples
-print >> sys.stderr, "starting projections, %d replicates" % n_replicates
+all_props = np.empty([n_geno, n_anc, n_replicates])
+print >> sys.stderr, "Starting projections, %d replicates" % n_replicates
 for i_rep in range(n_replicates):
-	print >> sys.stderr, "%d/%d" % (i+1, n_replicates)
-	out_filename = "%s_props_%d.txt" % (prefix, i)
+	print >> sys.stderr, "%d/%d" % (i_rep+1, n_replicates)
+	out_filename = "%s_props_%d.txt" % (prefix, i_rep)
 	props_minim = estimate_proportions(geno_data, anc_data, True)
+	all_props[:,:,i_rep] = props_minim
 	np.savetxt(out_filename, props_minim, fmt='%.6f')
 
-#print >> sys.stderr, "calculating summary statistics"
+print >> sys.stderr, "calculating summary statistics"
+summary_filename = "%s_summary.txt" % (prefix)
+with open(summary_filename, "w") as outfile:
+	print >> outfile, "ind\tcomponent\tmean\tstd\t95bottom\t95top"
+	for i_ind in range(n_geno):
+		for i_comp in range(n_anc):
+			this_data = all_props[i_ind,i_comp,:].reshape((n_replicates,1))
+			this_mean = np.mean(this_data)
+			this_std = np.std(this_data)
+			this_bottom = np.percentile(this_data, 2.5)
+			this_top = np.percentile(this_data, 97.5)
+			print >> outfile, "%d\t%d\t%.6f\t%.6f\t%.6f\t%.6f" % (i_ind, i_comp, this_mean, this_std, this_bottom, this_top)
