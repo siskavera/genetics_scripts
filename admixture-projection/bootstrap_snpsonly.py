@@ -54,6 +54,9 @@ with open(geno_filename) as f:
 	ncols = len(f.readline().split(' '))
 
 geno_data_raw = np.loadtxt(geno_filename, delimiter=' ', usecols=range(6,ncols))
+if len(geno_data_raw.shape) == 1: # Single individual
+	geno_data_raw = geno_data_raw.reshape((1, geno_data_raw.shape[0]))
+
 n_snps = geno_data_raw.shape[1]/2
 n_geno = geno_data_raw.shape[0]
 print >> sys.stderr, "Projecting %d individuals" % n_geno
